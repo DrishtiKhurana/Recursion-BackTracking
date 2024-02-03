@@ -1,1 +1,41 @@
+/*
+    Time Complexity : O(2^N)
+    Space Complexity : O(N)
+    
+	Where 'N' is the number of students.
+*/
 
+import java.util.ArrayList;
+
+public class Solution {
+	private static int tugOfWarHelper(int i, int subsetSum, int cnt, int totalSum, ArrayList<Integer> arr, int n) {
+		// base case
+		if (i == n || cnt >= (n / 2)) {
+			if (cnt == (n / 2)) {
+				return Math.abs(totalSum - 2 * subsetSum);
+			}
+			return Integer.MAX_VALUE;
+		}
+		int ans = Integer.MAX_VALUE;
+
+		// don't take ith student
+		ans = Math.min(ans, tugOfWarHelper(i + 1, subsetSum, cnt, totalSum, arr, n));
+
+		// take ith student
+		ans = Math.min(ans, tugOfWarHelper(i + 1, subsetSum + arr.get(i), cnt + 1, totalSum, arr, n));
+
+		return ans;
+	}
+
+	public static int tugOfWar(ArrayList<Integer> arr, int n) {
+		int totalSum = 0;
+		for (int i = 0; i < n; i++) {
+			totalSum += arr.get(i);
+		}
+
+		// call the recursive function
+		int ans = tugOfWarHelper(0, 0, 0, totalSum, arr, n);
+
+		return ans;
+	}
+}
