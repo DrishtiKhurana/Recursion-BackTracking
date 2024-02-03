@@ -1,0 +1,44 @@
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+          List<String> ls=new ArrayList<>();
+          int minRemoval=getMinRemovals(s);
+          HashMap<String,Boolean> set=new HashMap<>();
+          getValidAns(s,set,ls,minRemoval);
+          return ls;
+        }
+      public void getValidAns(String s, HashMap<String,Boolean> set, List<String> ls,int minRemoval){
+        if(minRemoval==0){
+          if(getMinRemovals(s)==0){
+              ls.add(s);
+          }
+          return;
+        }
+        for(int i=0;i<s.length();i++){
+          String first=s.substring(0,i);
+          String last=s.substring(i+1);
+          if(!set.containsKey(first+last)){
+           set.put(first+last,true);
+          getValidAns(first+last,set,ls,minRemoval-1);
+          }
+        }
+      }
+      public int getMinRemovals(String s){
+        Stack<Character> sk=new Stack<>();
+        for(int i=0;i<s.length();i++){
+          char c=s.charAt(i);
+          if(c=='('){
+            sk.push('(');
+          }
+          else if(c==')' && sk.size()==0){
+            sk.push(')');
+          }
+          else if(c==')' && sk.peek()==')'){
+            sk.push(')');      
+          }
+          else if(c==')' && sk.peek()=='('){
+            sk.pop();
+          }
+        }
+        return sk.size();
+      }
+    }
