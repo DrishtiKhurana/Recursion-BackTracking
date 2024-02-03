@@ -39,3 +39,47 @@ public class Solution {
 		return ans;
 	}
 }
+
+
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+static int diff;
+	
+	public static int tugOfWar(ArrayList<Integer> arr, int n) {
+		// Write your code here.
+		// Write your code here.
+
+	List<Integer> arr1=new ArrayList<>();
+	List<Integer> arr2=new ArrayList<>();
+   diff=Integer.MAX_VALUE;
+    sol(0,arr,arr1,arr2,0,0);
+    return diff;
+	}
+	 
+
+	public static void sol(int ind,  List<Integer>  arr,List<Integer>  arr1,List<Integer>  arr2,int sum1,int sum2)
+    {
+	if(ind==arr.size()){
+        diff=Math.min(diff,Math.abs(sum1-sum2));
+        return;
+    }
+    
+    if(arr1.size() < (arr.size()+1)/2){
+        arr1.add(arr.get(ind));
+        sum1+=arr.get(ind);
+        sol(ind+1,arr,arr1,arr2,sum1,sum2);
+        arr1.remove(arr1.size()-1);
+        sum1-=arr.get(ind);
+    }
+    if(arr2.size() < (arr.size()+1)/2){
+        arr2.add(arr.get(ind));
+        sum2+=arr.get(ind);
+        sol(ind+1,arr,arr1,arr2,sum1,sum2);
+        arr2.remove(arr2.size()-1);
+        sum2-=arr.get(ind);
+    }
+}
+}
